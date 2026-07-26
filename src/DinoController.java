@@ -178,13 +178,13 @@ public class DinoController {
         pausarCorrer();
 
         salto.setOnFinished(e -> {
-        dinoEstatico.setTranslateY(0);
-        dinoEstatico.setImage(runFrames[0]); // <-- resetea la imagen al aterrizar
-        if (!estaAgachado) {
-            reanudarCorrer();
-        }
-        estaSaltando = false;
-    });
+            dinoEstatico.setTranslateY(0);
+            dinoEstatico.setImage(runFrames[0]);
+            estaSaltando = false;        
+            if (!estaAgachado) {
+                reanudarCorrer();        
+            }
+        });
 
         salto.play();
     }
@@ -324,10 +324,23 @@ public class DinoController {
         }
     }
 
-    private void terminarJuego() {
+   private void terminarJuego() {
         if (juegoTerminado) return;
+        
         juegoTerminado = true;
         detenerJuego();
+
+        for (Node node : mundoLayer.getChildren()) {
+            if (node instanceof ImageView && node != dinoEstatico) {
+                Timeline[] timelines = (Timeline[]) node.getUserData();
+                if (timelines != null) {
+                    for (Timeline t : timelines) {
+                        if (t != null) t.stop();
+                    }
+                }
+            }
+        }
+
         btnIniciar.setText("Reintentar");
         btnIniciar.setVisible(true);
         System.out.println("¡GAME OVER!");
