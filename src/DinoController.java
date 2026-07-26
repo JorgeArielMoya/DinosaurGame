@@ -4,6 +4,7 @@ import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -16,20 +17,17 @@ import java.util.Random;
 
 public class DinoController {
     @FXML private Pane panelJuego;
-
     @FXML private Pane mundoLayer;
-
     @FXML private ImageView dinoEstatico;
-
     @FXML private Line lineaRecorrido;
+    @FXML private Button btnIniciar;
 
     // Constantes del juego
-    private final double GROUND_LEVEL = 67.0;
-    private final double DINO_BASE_Y = GROUND_LEVEL - 60.0; 
+    private final double GROUND_LEVEL = 230.0;
+    private final double DINO_BASE_Y = GROUND_LEVEL - 55.0; // antes era -70.0, ahora baja ~15px 160.0 (usando la nueva altura de 70)
     private final double DURACION_SALTO = 400; // ms
     private final double ALTURA_SALTO = -130; // px
     private final double DISTANCIA_MINIMA = 200;
-    private final double COOLDOWN_OBSTACULOS = 1.0;
     private final double PTERO_SPAWN_CHANCE = 0.3;
     private final Random random = new Random();
 
@@ -66,15 +64,12 @@ public class DinoController {
         panelJuego.setOnKeyPressed(this::handleKeyPress);
         panelJuego.setOnKeyReleased(this::handleKeyRelease);
 
-        // Configurar animaciones y sprites
+        // Configurar animaciones y sprites (solo preparan, no reproducen)
         configurarAgachado();
         configurarMovimiento();
         configurarCorrer();
 
-        // Iniciar animación de correr al inicio
-        animacionCorrer.play();
-
-        // Debug visual
+        // El juego queda estático hasta hacer clic en "Iniciar Juego"
         lineaRecorrido.setVisible(false);
     }
 
@@ -95,12 +90,13 @@ public class DinoController {
 
             generarObstaculo(deltaTime);
             cleanObstacles();
+            verificarColisiones();
 
             spdDino += 0.001;
         }));
 
         animacionMove.setCycleCount(Animation.INDEFINITE);
-        animacionMove.play();
+        // No se reproduce aquí; arranca en iniciarJuego()
     }
 
     // ============== ANIMACIÓN DE CORRER ==============
@@ -116,7 +112,7 @@ public class DinoController {
         }));
 
         animacionCorrer.setCycleCount(Animation.INDEFINITE);
-        dinoEstatico.setImage(runFrames[0]); // Inicial
+        dinoEstatico.setImage(runFrames[0]); // Imagen inicial estática
     }
 
     private void reanudarCorrer() {
@@ -150,12 +146,12 @@ public class DinoController {
     }
 
     private void agacharse() {
-        if (!estaSaltando && !estaAgachado) {
+        if (!estaSaltando && !estaAgachado && !juegoTerminado) {
             estaAgachado = true;
             dinoEstatico.setFitHeight(alturaOriginal * 0.6);
             dinoEstatico.setLayoutY(dinoEstatico.getLayoutY() + (alturaOriginal * 0.4));
             animacionAgacharse.play();
-            animacionCorrer.pause();
+            pausarCorrer();
         }
     }
 
@@ -165,24 +161,26 @@ public class DinoController {
             dinoEstatico.setFitHeight(alturaOriginal);
             dinoEstatico.setLayoutY(dinoEstatico.getLayoutY() - (alturaOriginal * 0.4));
             animacionAgacharse.stop();
-            animacionCorrer.play();
+            reanudarCorrer();
         }
     }
 
     // ============== SALTO ==============
     private void saltarDinosario() {
+        if (juegoTerminado) return;
+
         estaSaltando = true;
 
         TranslateTransition salto = new TranslateTransition(Duration.millis(DURACION_SALTO), dinoEstatico);
         salto.setByY(ALTURA_SALTO);
         salto.setAutoReverse(true);
         salto.setCycleCount(2);
-        animacionCorrer.pause();
+        pausarCorrer();
 
         salto.setOnFinished(e -> {
             dinoEstatico.setTranslateY(0);
             if (!estaAgachado) {
-                animacionCorrer.play();
+                reanudarCorrer();
             }
             estaSaltando = false;
         });
@@ -213,8 +211,7 @@ public class DinoController {
 
         if (tiempoUltimoObstaculo >= MIN_TIEMPO) {
             double posicionActual = mundoLayer.getPrefWidth();
-            
-            // Verificar que haya distancia mínima desde el último obstáculo
+
             if (posicionActual - ultimaPosicionObstaculo >= DISTANCIA_MINIMA) {
                 if (random.nextDouble() < PTERO_SPAWN_CHANCE) {
                     generarPtero();
@@ -290,6 +287,14 @@ public class DinoController {
             Node node = iterator.next();
             if (node != dinoEstatico && node != lineaRecorrido) {
                 if (node.getLayoutX() + mundoLayer.getLayoutX() < -50) {
+                    if (node instanceof ImageView) {
+                        Timeline[] timelines = (Timeline[]) node.getUserData();
+                        if (timelines != null) {
+                            for (Timeline t : timelines) {
+                                if (t != null) t.stop();
+                            }
+                        }
+                    }
                     iterator.remove();
                 }
             }
@@ -326,28 +331,38 @@ public class DinoController {
     private void terminarJuego() {
         if (juegoTerminado) return;
         juegoTerminado = true;
-        detenerJuego(); // ya la tienes definida
+        detenerJuego();
+        btnIniciar.setText("Reintentar");
+        btnIniciar.setVisible(true);
         System.out.println("¡GAME OVER!");
     }
 
     // ============== MÉTODOS PARA INICIAR/DETENER ==============
+    @FXML
     public void iniciarJuego() {
-        // Reiniciar estado del juego
+        btnIniciar.setVisible(false);
+        lineaRecorrido.setVisible(true);
+
         juegoTerminado = false;
         mundoLayer.setLayoutX(0);
         dinoEstatico.setLayoutY(DINO_BASE_Y);
+        dinoEstatico.setFitHeight(alturaOriginal);
+        dinoEstatico.setTranslateY(0);
         dinoEstatico.setImage(runFrames[0]);
+
         spdDino = 2.0;
         tiempoUltimoObstaculo = 0;
+        ultimaPosicionObstaculo = 0;
         estaSaltando = false;
         estaAgachado = false;
+        estaCorriendo = true;
 
-        // Limpiar obstáculos anteriores
         cleanObstacles();
 
-        // Iniciar animaciones
         animacionMove.play();
         animacionCorrer.play();
+
+        panelJuego.requestFocus();
     }
 
     public void detenerJuego() {
