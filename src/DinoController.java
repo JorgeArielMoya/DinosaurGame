@@ -27,7 +27,6 @@ public class DinoController {
     private final double DINO_BASE_Y = GROUND_LEVEL - 55.0; // antes era -70.0, ahora baja ~15px 160.0 (usando la nueva altura de 70)
     private final double DURACION_SALTO = 400; // ms
     private final double ALTURA_SALTO = -130; // px
-    private final double DISTANCIA_MINIMA = 200;
     private final double PTERO_SPAWN_CHANCE = 0.3;
     private final Random random = new Random();
 
@@ -37,7 +36,6 @@ public class DinoController {
     private boolean estaAgachado = false;
     private boolean estaCorriendo = true;
     private double alturaOriginal;
-    private double ultimaPosicionObstaculo = 0;
 
     // Animaciones
     private Timeline animacionMove;
@@ -360,8 +358,6 @@ public class DinoController {
         dinoEstatico.setImage(runFrames[0]);
 
         spdDino = 3.5;
-        tiempoUltimoObstaculo = -1.0;
-        ultimaPosicionObstaculo = 0;
         estaSaltando = false;
         estaAgachado = false;
         estaCorriendo = true;
