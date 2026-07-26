@@ -10,9 +10,10 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Dinosaur.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 900, 350);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Dino Game");
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 
