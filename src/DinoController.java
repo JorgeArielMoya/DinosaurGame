@@ -32,7 +32,7 @@ public class DinoController {
     private final Random random = new Random();
 
     // Variables de estado
-    private double spdDino = 4.0;
+    private double spdDino;
     private boolean estaSaltando = false;
     private boolean estaAgachado = false;
     private boolean estaCorriendo = true;
@@ -210,17 +210,12 @@ public class DinoController {
         tiempoUltimoObstaculo += deltaTime;
 
         if (tiempoUltimoObstaculo >= MIN_TIEMPO) {
-            double posicionActual = mundoLayer.getPrefWidth();
-
-            if (posicionActual - ultimaPosicionObstaculo >= DISTANCIA_MINIMA) {
-                if (random.nextDouble() < PTERO_SPAWN_CHANCE) {
-                    generarPtero();
-                } else {
-                    generarCactus();
-                }
-                ultimaPosicionObstaculo = posicionActual;
-                tiempoUltimoObstaculo = 0;
+            if (random.nextDouble() < PTERO_SPAWN_CHANCE) {
+                generarPtero();
+            } else {
+                generarCactus();
             }
+            tiempoUltimoObstaculo = 0;
         }
     }
 
@@ -350,7 +345,7 @@ public class DinoController {
         dinoEstatico.setTranslateY(0);
         dinoEstatico.setImage(runFrames[0]);
 
-        spdDino = 2.0;
+        spdDino = 3.5;
         tiempoUltimoObstaculo = -1.0;
         ultimaPosicionObstaculo = 0;
         estaSaltando = false;
