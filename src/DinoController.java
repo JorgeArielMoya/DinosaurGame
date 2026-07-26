@@ -178,12 +178,13 @@ public class DinoController {
         pausarCorrer();
 
         salto.setOnFinished(e -> {
-            dinoEstatico.setTranslateY(0);
-            if (!estaAgachado) {
-                reanudarCorrer();
-            }
-            estaSaltando = false;
-        });
+        dinoEstatico.setTranslateY(0);
+        dinoEstatico.setImage(runFrames[0]); // <-- resetea la imagen al aterrizar
+        if (!estaAgachado) {
+            reanudarCorrer();
+        }
+        estaSaltando = false;
+    });
 
         salto.play();
     }
