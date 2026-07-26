@@ -4,12 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "type": "java",
-            "name": "Current File",
+            "name": "App",
             "request": "launch",
-            "mainClass": "${file}"
-        }
+            "mainClass": "App",
+            "projectName": "DinosaurGame_423ef1b9", 
+            "vmArgs": "--module-path \"C:\\Users\\jorge\\Desktop\\JavaFx\\openjfx-24.0.1_windows-x64_bin-sdk\\javafx-sdk-24.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+        },
     ]
 }
