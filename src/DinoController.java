@@ -15,18 +15,13 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class DinoController {
+    @FXML private Pane panelJuego;
 
-    @FXML
-    private Pane panelJuego;
+    @FXML private Pane mundoLayer;
 
-    @FXML
-    private Pane mundoLayer;
+    @FXML private ImageView dinoEstatico;
 
-    @FXML
-    private ImageView dinoEstatico;
-
-    @FXML
-    private Line lineaRecorrido;
+    @FXML private Line lineaRecorrido;
 
     // Constantes del juego
     private final double GROUND_LEVEL = 67.0; // LayoutY de la línea de recorrido
@@ -88,6 +83,8 @@ public class DinoController {
         final double DINO_FIXED_X = 20;
 
         animacionMove = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+            if (juegoTerminado) return;
+
             long now = System.nanoTime();
             double deltaTime = (now - lastTime[0]) / 1e9;
             lastTime[0] = now;
@@ -310,13 +307,12 @@ public class DinoController {
         juegoTerminado = true;
         detenerJuego(); // ya la tienes definida
         System.out.println("¡GAME OVER!");
-        // Aquí puedes notificar a otra clase/controller que muestre el menú
-        // de "Reintentar", si ese botón vive en otro FXML/controller.
     }
 
     // ============== MÉTODOS PARA INICIAR/DETENER ==============
     public void iniciarJuego() {
         // Reiniciar estado del juego
+        juegoTerminado = false;
         mundoLayer.setLayoutX(0);
         dinoEstatico.setLayoutY(DINO_BASE_Y);
         dinoEstatico.setImage(runFrames[0]);
