@@ -24,8 +24,8 @@ public class DinoController {
     @FXML private Line lineaRecorrido;
 
     // Constantes del juego
-    private final double GROUND_LEVEL = 67.0; // LayoutY de la línea de recorrido
-    private final double DINO_BASE_Y = GROUND_LEVEL - 60.0; // 60 = altura del dinosaurio
+    private final double GROUND_LEVEL = 67.0;
+    private final double DINO_BASE_Y = GROUND_LEVEL - 60.0; 
     private final double DURACION_SALTO = 400; // ms
     private final double ALTURA_SALTO = -130; // px
     private final double DISTANCIA_MINIMA = 200;
@@ -39,6 +39,7 @@ public class DinoController {
     private boolean estaAgachado = false;
     private boolean estaCorriendo = true;
     private double alturaOriginal;
+    private double ultimaPosicionObstaculo = 0;
 
     // Animaciones
     private Timeline animacionMove;
@@ -105,8 +106,8 @@ public class DinoController {
     // ============== ANIMACIÓN DE CORRER ==============
     private void configurarCorrer() {
         runFrames = new Image[]{
-            new Image(getClass().getResourceAsStream("/images/Pie1.png")),
-            new Image(getClass().getResourceAsStream("/images/Pie2.png"))
+            new Image(getClass().getResourceAsStream("/Images/ImagesDino/PieIzquierdo.png")),
+            new Image(getClass().getResourceAsStream("/Images/ImagesDino/PieDerecho.png"))
         };
 
         animacionCorrer = new Timeline(new KeyFrame(Duration.millis(100), e -> {
@@ -118,11 +119,25 @@ public class DinoController {
         dinoEstatico.setImage(runFrames[0]); // Inicial
     }
 
+    private void reanudarCorrer() {
+        if (!estaSaltando && !estaAgachado && !estaCorriendo) {
+            estaCorriendo = true;
+            animacionCorrer.play();
+        }
+    }
+
+    private void pausarCorrer() {
+        if (estaCorriendo) {
+            estaCorriendo = false;
+            animacionCorrer.pause();
+        }
+    }
+
     // ============== AGACHADO ==============
     private void configurarAgachado() {
         duckFrames = new Image[]{
-            new Image(getClass().getResourceAsStream("/images/Pie1Agachado.png")),
-            new Image(getClass().getResourceAsStream("/images/Pie2Agachado.png"))
+            new Image(getClass().getResourceAsStream("/Images/ImagesDino/AgachadoPieIzquierdo.png")),
+            new Image(getClass().getResourceAsStream("/Images/ImagesDino/AgachadoPieDerecho.png"))
         };
 
         animacionAgacharse = new Timeline(new KeyFrame(Duration.millis(100), e -> {
@@ -197,19 +212,25 @@ public class DinoController {
         tiempoUltimoObstaculo += deltaTime;
 
         if (tiempoUltimoObstaculo >= MIN_TIEMPO) {
-            if (random.nextDouble() < PTERO_SPAWN_CHANCE) {
-                generarPtero();
-            } else {
-                generarCactus();
+            double posicionActual = mundoLayer.getPrefWidth();
+            
+            // Verificar que haya distancia mínima desde el último obstáculo
+            if (posicionActual - ultimaPosicionObstaculo >= DISTANCIA_MINIMA) {
+                if (random.nextDouble() < PTERO_SPAWN_CHANCE) {
+                    generarPtero();
+                } else {
+                    generarCactus();
+                }
+                ultimaPosicionObstaculo = posicionActual;
+                tiempoUltimoObstaculo = 0;
             }
-            tiempoUltimoObstaculo = 0;
         }
     }
 
     private void generarCactus() {
         int cantCactus = random.nextInt(1, 4);
         ImageView cactus = new ImageView(
-            new Image(getClass().getResourceAsStream("/ImagesObs/Cactus" + cantCactus + ".png"))
+            new Image(getClass().getResourceAsStream("/Images/ImagesObs/Cactus" + cantCactus + ".png"))
         );
 
         cactus.setFitHeight(40);
@@ -230,8 +251,8 @@ public class DinoController {
 
     private void generarPtero() {
         Image[] aleteoFrames = {
-            new Image(getClass().getResourceAsStream("/ImagesObs/AletaAbajo.png")),
-            new Image(getClass().getResourceAsStream("/ImagesObs/AletaArriba.png"))
+            new Image(getClass().getResourceAsStream("/Images/ImagesObs/AlaAbajo.png")),
+            new Image(getClass().getResourceAsStream("/Images/ImagesObs/AlaArriba.png"))
         };
 
         ImageView imagenPtero = new ImageView(aleteoFrames[0]);
