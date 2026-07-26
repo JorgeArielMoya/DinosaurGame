@@ -1,3 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Line?>
+
 <Pane fx:id="panelJuego" layoutY="233.0" prefHeight="110.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DinoController">
    <children>
       <Pane fx:id="mundoLayer" prefHeight="110.0" prefWidth="621.0">
