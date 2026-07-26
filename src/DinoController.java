@@ -32,7 +32,7 @@ public class DinoController {
     private final Random random = new Random();
 
     // Variables de estado
-    private double spdDino = 2.0;
+    private double spdDino = 4.0;
     private boolean estaSaltando = false;
     private boolean estaAgachado = false;
     private boolean estaCorriendo = true;
@@ -92,7 +92,7 @@ public class DinoController {
             cleanObstacles();
             verificarColisiones();
 
-            spdDino += 0.001;
+            spdDino += 0.002;
         }));
 
         animacionMove.setCycleCount(Animation.INDEFINITE);
@@ -351,7 +351,7 @@ public class DinoController {
         dinoEstatico.setImage(runFrames[0]);
 
         spdDino = 2.0;
-        tiempoUltimoObstaculo = 0;
+        tiempoUltimoObstaculo = -1.0;
         ultimaPosicionObstaculo = 0;
         estaSaltando = false;
         estaAgachado = false;
