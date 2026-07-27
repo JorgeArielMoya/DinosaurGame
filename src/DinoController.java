@@ -23,16 +23,14 @@ public class DinoController {
     @FXML private Line lineaRecorrido;
     @FXML private Button btnIniciar;
     @FXML private Label lblScore;
-
-    // Constantes del juego
+   
     private final double GROUND_LEVEL = 230.0;
-    private final double DINO_BASE_Y = GROUND_LEVEL - 55.0; // antes era -70.0, ahora baja ~15px 160.0 (usando la nueva altura de 70)
-    private final double DURACION_SALTO = 400; // ms
-    private final double ALTURA_SALTO = -130; // px
+    private final double DINO_BASE_Y = GROUND_LEVEL - 55.0; 
+    private final double DURACION_SALTO = 400; 
+    private final double ALTURA_SALTO = -130;
     private final double PTERO_SPAWN_CHANCE = 0.3;
     private final Random random = new Random();
 
-    // Variables de estado
     private double spdDino;
     private boolean estaSaltando = false;
     private boolean estaAgachado = false;
@@ -40,41 +38,33 @@ public class DinoController {
     private double alturaOriginal;
     private int score = 0;
 
-    // Animaciones
     private Timeline animacionMove;
     private Timeline animacionCorrer;
     private Timeline animacionAgacharse;
 
-    // Sprites
     private Image[] runFrames;
     private Image[] duckFrames;
 
-    // Control de spawn de obstáculos
     private double tiempoUltimoObstaculo = 0;
     private final double MIN_TIEMPO = 1.5;
 
     private boolean juegoTerminado = false;
 
     public void initialize() {
-        // Configuración del dinosaurio
         dinoEstatico.setLayoutY(DINO_BASE_Y);
         dinoEstatico.setLayoutX(20);
 
-        // Configurar teclado
         panelJuego.setFocusTraversable(true);
         panelJuego.setOnKeyPressed(this::handleKeyPress);
         panelJuego.setOnKeyReleased(this::handleKeyRelease);
 
-        // Configurar animaciones y sprites (solo preparan, no reproducen)
         configurarAgachado();
         configurarMovimiento();
         configurarCorrer();
 
-        // El juego queda estático hasta hacer clic en "Iniciar Juego"
         lineaRecorrido.setVisible(false);
     }
 
-    // ============== MOVIMIENTO ==============
     private void configurarMovimiento() {
         final long[] lastTime = {System.nanoTime()};
         final double DINO_FIXED_X = 20;
@@ -100,10 +90,8 @@ public class DinoController {
         }));
 
         animacionMove.setCycleCount(Animation.INDEFINITE);
-        // No se reproduce aquí; arranca en iniciarJuego()
     }
 
-    // ============== ANIMACIÓN DE CORRER ==============
     private void configurarCorrer() {
         runFrames = new Image[]{
             new Image(getClass().getResourceAsStream("/Images/ImagesDino/PieIzquierdo.png")),
@@ -116,7 +104,7 @@ public class DinoController {
         }));
 
         animacionCorrer.setCycleCount(Animation.INDEFINITE);
-        dinoEstatico.setImage(runFrames[0]); // Imagen inicial estática
+        dinoEstatico.setImage(runFrames[0]);
     }
 
     private void reanudarCorrer() {
@@ -133,7 +121,6 @@ public class DinoController {
         }
     }
 
-    // ============== AGACHADO ==============
     private void configurarAgachado() {
         duckFrames = new Image[]{
             new Image(getClass().getResourceAsStream("/Images/ImagesDino/AgachadoPieIzquierdo.png")),
@@ -169,7 +156,6 @@ public class DinoController {
         }
     }
 
-    // ============== SALTO ==============
     private void saltarDinosario() {
         if (juegoTerminado) return;
 
@@ -193,7 +179,6 @@ public class DinoController {
         salto.play();
     }
 
-    // ============== MANEJO DE TECLAS ==============
     private void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE || event.getCode() == KeyCode.UP) {
             if (!estaSaltando) {
@@ -210,7 +195,6 @@ public class DinoController {
         }
     }
 
-    // ============== GENERACIÓN DE OBSTÁCULOS ==============
     private void generarObstaculo(double deltaTime) {
         tiempoUltimoObstaculo += deltaTime;
 
@@ -280,7 +264,6 @@ public class DinoController {
         mundoLayer.getChildren().add(imagenPtero);
     }
 
-    // ============== LIMPIEZA DE OBSTÁCULOS ==============
     private void cleanObstacles() {
         Iterator<Node> iterator = mundoLayer.getChildren().iterator();
         while (iterator.hasNext()) {
@@ -301,7 +284,6 @@ public class DinoController {
         }
     }
 
-    // ============== COLISIONES ==============
     private void verificarColisiones() {
         if (juegoTerminado) return;
 
@@ -350,7 +332,6 @@ public class DinoController {
         System.out.println("¡GAME OVER!");
     }
 
-    // ============== MÉTODOS PARA INICIAR/DETENER ==============
     @FXML
     public void iniciarJuego() {
         btnIniciar.setVisible(false);
