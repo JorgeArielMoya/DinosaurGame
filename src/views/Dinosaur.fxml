@@ -18,7 +18,7 @@
             <ImageView fx:id="dinoEstatico" fitHeight="70.0" fitWidth="50.0" 
                        layoutX="30.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/ImagesDino/DinoEstatico.png" />
+                  <Image url="@../images/imagesDino/DinoEstatico.png" />
                </image>
             </ImageView>
             <Line fx:id="lineaRecorrido" endX="900.0" layoutX="0.0" layoutY="230.0" startX="0.0" stroke="WHITE" visible="false" />
