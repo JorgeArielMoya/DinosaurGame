@@ -9,7 +9,7 @@ import javafx.util.Duration;
 import models.Obstaculo;
 import java.util.function.Consumer;
 
-public class GameEngine {
+public class GameManager {
     private final Pane mundoLayer;
     private final ImageView dinoEstatico;
     private final EnemyManager enemyManager;
@@ -22,7 +22,7 @@ public class GameEngine {
     private Consumer<Integer> onScoreUpdate;
     private Runnable onGameOver;
 
-    public GameEngine(Pane mundoLayer, ImageView dinoEstatico, double groundLevel) {
+    public GameManager(Pane mundoLayer, ImageView dinoEstatico, double groundLevel) {
         this.mundoLayer = mundoLayer;
         this.dinoEstatico = dinoEstatico;
         this.enemyManager = new EnemyManager(mundoLayer, groundLevel);

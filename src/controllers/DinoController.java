@@ -1,6 +1,6 @@
 package controllers;
 
-import services.GameEngine;
+import services.GameManager;
 import services.DinoManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,7 +21,7 @@ public class DinoController {
 
     private final double GROUND_LEVEL = 230.0;
 
-    private GameEngine gameEngine;
+    private GameManager gameEngine;
     private DinoManager dinoManager;
 
     public void initialize() {
@@ -32,7 +32,7 @@ public class DinoController {
         lineaRecorrido.setVisible(false);
 
         dinoManager = new DinoManager(dinoEstatico, GROUND_LEVEL);
-        gameEngine = new GameEngine(mundoLayer, dinoEstatico, GROUND_LEVEL);
+        gameEngine = new GameManager(mundoLayer, dinoEstatico, GROUND_LEVEL);
 
         gameEngine.setOnScoreUpdate(score -> lblScore.setText("Score: " + score));
         gameEngine.setOnGameOver(this::manejarGameOver);
