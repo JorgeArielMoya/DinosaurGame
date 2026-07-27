@@ -50,8 +50,8 @@ public class DinoManager {
         alturaOriginal = dinoEstatico.getFitHeight();
 
         duckFrames = new Image[]{
-            new Image(getClass().getResourceAsStream("/images/imagesDino/AgachadoPieIzquierdo.png")),
-            new Image(getClass().getResourceAsStream("/images/imagesDino/AgachadoPieDerecho.png"))
+            new Image(getClass().getResourceAsStream("/images/imagesDino/AgachadoIzquierdo.png")),
+            new Image(getClass().getResourceAsStream("/images/imagesDino/AgachadoDerecho.png"))
         };
 
         animacionAgacharse = new Timeline(new KeyFrame(Duration.millis(100), e -> {
