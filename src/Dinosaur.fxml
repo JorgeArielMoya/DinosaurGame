@@ -5,6 +5,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 
 <Pane fx:id="panelJuego" prefHeight="350.0" prefWidth="900.0" 
       style="-fx-background-color: black;"
@@ -14,7 +15,8 @@
    <children>
       <Pane fx:id="mundoLayer" layoutY="40.0" prefHeight="300.0" prefWidth="900.0" style="-fx-background-color: black;">
          <children>
-            <ImageView fx:id="dinoEstatico" fitHeight="70.0" fitWidth="50.0" layoutX="30.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="dinoEstatico" fitHeight="70.0" fitWidth="50.0" 
+layoutX="30.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/ImagesDino/DinoEstatico.png" />
                </image>
@@ -26,5 +28,8 @@
       <Button fx:id="btnIniciar" text="Iniciar Juego" layoutX="400.0" layoutY="5.0" 
               onAction="#iniciarJuego" 
               style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+      <Label fx:id="lblScore" text="Score: 0" layoutX="800.0" layoutY="10.0" 
+             style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
    </children>
 </Pane>
