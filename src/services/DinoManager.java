@@ -10,7 +10,6 @@ import javafx.util.Duration;
 
 public class DinoManager {
     private final ImageView dinoEstatico;
-    private final double groundLevel;
     private final double dinoBaseY;
 
     private final double DURACION_SALTO = 400;
@@ -28,7 +27,6 @@ public class DinoManager {
 
     public DinoManager(ImageView dinoEstatico, double groundLevel) {
         this.dinoEstatico = dinoEstatico;
-        this.groundLevel = groundLevel;
         this.dinoBaseY = groundLevel - 55.0;
         
         dinoEstatico.setLayoutY(dinoBaseY);
@@ -38,7 +36,6 @@ public class DinoManager {
     }
 
     private void configurarFrames() {
-        // Frames de correr
         runFrames = new Image[]{
             new Image(getClass().getResourceAsStream("/Images/ImagesDino/PieIzquierdo.png")),
             new Image(getClass().getResourceAsStream("/Images/ImagesDino/PieDerecho.png"))
@@ -52,7 +49,6 @@ public class DinoManager {
         dinoEstatico.setImage(runFrames[0]);
         alturaOriginal = dinoEstatico.getFitHeight();
 
-        // Frames de agacharse
         duckFrames = new Image[]{
             new Image(getClass().getResourceAsStream("/Images/ImagesDino/AgachadoPieIzquierdo.png")),
             new Image(getClass().getResourceAsStream("/Images/ImagesDino/AgachadoPieDerecho.png"))
