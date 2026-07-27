@@ -46,7 +46,6 @@ public class DinoManager {
             dinoEstatico.setImage(current == runFrames[0] ? runFrames[1] : runFrames[0]);
         }));
         animacionCorrer.setCycleCount(Animation.INDEFINITE);
-        dinoEstatico.setImage(runFrames[0]);
         alturaOriginal = dinoEstatico.getFitHeight();
 
         duckFrames = new Image[]{
