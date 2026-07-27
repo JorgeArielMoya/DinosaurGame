@@ -18,7 +18,9 @@ public class DinoController {
     @FXML private Line lineaRecorrido;
     @FXML private Button btnIniciar;
     @FXML private Label lblScore;
+    @FXML private Label lblRecord;
 
+    private int recordActual = 0;
     private final double GROUND_LEVEL = 230.0;
 
     private GameManager gameEngine;
@@ -34,7 +36,15 @@ public class DinoController {
         dinoManager = new DinoManager(dinoEstatico, GROUND_LEVEL);
         gameEngine = new GameManager(mundoLayer, dinoEstatico, GROUND_LEVEL);
 
-        gameEngine.setOnScoreUpdate(score -> lblScore.setText("Score: " + score));
+        gameEngine.setOnScoreUpdate(score -> {
+        lblScore.setText("Score: " + score);
+
+            if (score > recordActual) {
+                recordActual = score;
+                lblRecord.setText("Record: " + recordActual);
+            }
+        });
+        
         gameEngine.setOnGameOver(this::manejarGameOver);
     }
 
