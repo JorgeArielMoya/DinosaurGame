@@ -5,6 +5,7 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -21,6 +22,7 @@ public class DinoController {
     @FXML private ImageView dinoEstatico;
     @FXML private Line lineaRecorrido;
     @FXML private Button btnIniciar;
+    @FXML private Label lblScore;
 
     // Constantes del juego
     private final double GROUND_LEVEL = 230.0;
@@ -36,6 +38,7 @@ public class DinoController {
     private boolean estaAgachado = false;
     private boolean estaCorriendo = true;
     private double alturaOriginal;
+    private int score = 0;
 
     // Animaciones
     private Timeline animacionMove;
@@ -91,6 +94,9 @@ public class DinoController {
             verificarColisiones();
 
             spdDino += 0.002;
+
+            score++;
+            lblScore.setText("Score: " + score);
         }));
 
         animacionMove.setCycleCount(Animation.INDEFINITE);
@@ -361,6 +367,9 @@ public class DinoController {
         estaSaltando = false;
         estaAgachado = false;
         estaCorriendo = true;
+
+        score = 0;
+        lblScore.setText("Score: 0");
 
         cleanObstacles();
 
