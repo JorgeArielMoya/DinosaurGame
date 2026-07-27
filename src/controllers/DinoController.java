@@ -29,7 +29,7 @@ public class DinoController {
         panelJuego.setOnKeyPressed(this::handleKeyPress);
         panelJuego.setOnKeyReleased(this::handleKeyRelease);
 
-        lineaRecorrido.setVisible(false);
+        lineaRecorrido.setVisible(true);
 
         dinoManager = new DinoManager(dinoEstatico, GROUND_LEVEL);
         gameEngine = new GameManager(mundoLayer, dinoEstatico, GROUND_LEVEL);
