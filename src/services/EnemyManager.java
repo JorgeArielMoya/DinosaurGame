@@ -44,7 +44,7 @@ public class EnemyManager {
     private void generarCactus(double spdDino) {
         int cantCactus = random.nextInt(1, 4);
         ImageView cactusImg = new ImageView(
-            new Image(getClass().getResourceAsStream("/Images/ImagesObs/Cactus" + cantCactus + ".png"))
+            new Image(getClass().getResourceAsStream("/images/imagesObs/Cactus" + cantCactus + ".png"))
         );
 
         cactusImg.setFitHeight(40);
@@ -65,8 +65,8 @@ public class EnemyManager {
 
     private void generarPtero(double spdDino) {
         Image[] aleteoFrames = {
-            new Image(getClass().getResourceAsStream("/Images/ImagesObs/AlaAbajo.png")),
-            new Image(getClass().getResourceAsStream("/Images/ImagesObs/AlaArriba.png"))
+            new Image(getClass().getResourceAsStream("/images/imagesObs/AlaAbajo.png")),
+            new Image(getClass().getResourceAsStream("/images/imagesObs/AlaArriba.png"))
         };
 
         ImageView imagenPtero = new ImageView(aleteoFrames[0]);

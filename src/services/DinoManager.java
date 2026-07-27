@@ -37,8 +37,8 @@ public class DinoManager {
 
     private void configurarFrames() {
         runFrames = new Image[]{
-            new Image(getClass().getResourceAsStream("/Images/ImagesDino/PieIzquierdo.png")),
-            new Image(getClass().getResourceAsStream("/Images/ImagesDino/PieDerecho.png"))
+            new Image(getClass().getResourceAsStream("/images/imagesDino/PieIzquierdo.png")),
+            new Image(getClass().getResourceAsStream("/images/imagesDino/PieDerecho.png"))
         };
 
         animacionCorrer = new Timeline(new KeyFrame(Duration.millis(100), e -> {
@@ -50,8 +50,8 @@ public class DinoManager {
         alturaOriginal = dinoEstatico.getFitHeight();
 
         duckFrames = new Image[]{
-            new Image(getClass().getResourceAsStream("/Images/ImagesDino/AgachadoPieIzquierdo.png")),
-            new Image(getClass().getResourceAsStream("/Images/ImagesDino/AgachadoPieDerecho.png"))
+            new Image(getClass().getResourceAsStream("/images/imagesDino/AgachadoPieIzquierdo.png")),
+            new Image(getClass().getResourceAsStream("/images/imagesDino/AgachadoPieDerecho.png"))
         };
 
         animacionAgacharse = new Timeline(new KeyFrame(Duration.millis(100), e -> {
