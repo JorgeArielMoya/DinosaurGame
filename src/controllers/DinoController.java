@@ -21,8 +21,8 @@ public class DinoController {
     private int recordActual = 0;
     private final double GROUND_LEVEL = 230.0;
 
-    private GameManager gameEngine;
-    private DinoManager dinoManager;
+    private GameLoopController gameEngine;
+    private DinoAnimController dinoManager;
 
     public void initialize() {
         panelJuego.setFocusTraversable(true);
@@ -31,8 +31,8 @@ public class DinoController {
 
         lineaRecorrido.setVisible(true);
 
-        dinoManager = new DinoManager(dinoEstatico, GROUND_LEVEL);
-        gameEngine = new GameManager(mundoLayer, dinoEstatico, GROUND_LEVEL);
+        dinoManager = new DinoAnimController(dinoEstatico, GROUND_LEVEL);
+        gameEngine = new GameLoopController(mundoLayer, dinoEstatico, GROUND_LEVEL);
 
         gameEngine.setOnScoreUpdate(score -> {
         lblScore.setText("Score: " + score);
