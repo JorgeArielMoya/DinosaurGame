@@ -25,8 +25,6 @@
 
 ```text
 DinosaurGame/
-├── controllers/    # Controladores de la interfaz (DinoController)
-├── services/       # Lógica del juego (GameManager, DinoManager, EnemyManager)
-├── models/         # Modelos de datos y entidades del juego
+├── controllers/    # Controladores de la interfaz (DinoController, DinoAnimController, EnemyController, GameLoopController)
+├── models/         # Modelos de datos y entidades del juego (Obstaculo, TipoObstaculo)
 ├── views/          # Archivos FXML e interfaces gráficas
-└── resources/      # Sprites de animación (Dino y obstáculos)
