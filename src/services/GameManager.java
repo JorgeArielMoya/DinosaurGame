@@ -13,10 +13,12 @@ public class GameManager {
     private final Pane mundoLayer;
     private final ImageView dinoEstatico;
     private final EnemyManager enemyManager;
+    private final double INTERVALO_SCORE = 0.1; 
     
     private Timeline animacionMove;
     private double spdDino;
     private int score = 0;
+    private double tiempoAcumuladoScore = 0;
     private boolean juegoTerminado = false;
     
     private Consumer<Integer> onScoreUpdate;
@@ -48,10 +50,15 @@ public class GameManager {
             verificarColisiones();
 
             spdDino += 0.002;
-            score++;
-            
-            if (onScoreUpdate != null) {
-                onScoreUpdate.accept(score);
+
+            tiempoAcumuladoScore += deltaTime;
+            if (tiempoAcumuladoScore >= INTERVALO_SCORE) {
+                score++;
+                tiempoAcumuladoScore = 0;
+
+                if (onScoreUpdate != null) {
+                    onScoreUpdate.accept(score);
+                }
             }
         }));
         animacionMove.setCycleCount(Animation.INDEFINITE);
@@ -85,6 +92,7 @@ public class GameManager {
     public void iniciar(double velocidadInicial) {
         this.spdDino = velocidadInicial;
         this.score = 0;
+        this.tiempoAcumuladoScore = 0;
         this.juegoTerminado = false;
         animacionMove.play();
     }
