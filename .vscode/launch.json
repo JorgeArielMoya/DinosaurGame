@@ -9,7 +9,8 @@
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "DinosaurGame_dfa21ed7",
+            "projectName": "DinosaurGame_5c657ddb",
+            
             "vmArgs": "--module-path \"C:\\Users\\jorge\\Desktop\\JavaFx\\openjfx-24.0.1_windows-x64_bin-sdk\\javafx-sdk-24.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
         },
     ]
