@@ -23,6 +23,7 @@ public class EnemyManager {
     private double tiempoUltimoObstaculo = 0;
     private final double MIN_TIEMPO = 1.5;
     private final double PTERO_SPAWN_CHANCE = 0.3;
+    private final double FANTASTICO_SPAWN_CHANCE = 0.15;
 
     public EnemyManager(Pane mundoLayer, double groundLevel) {
         this.mundoLayer = mundoLayer;
@@ -32,11 +33,16 @@ public class EnemyManager {
     public void actualizar(double deltaTime, double spdDino) {
         tiempoUltimoObstaculo += deltaTime;
         if (tiempoUltimoObstaculo >= MIN_TIEMPO) {
-            if (random.nextDouble() < PTERO_SPAWN_CHANCE) {
+            double roll = random.nextDouble();
+
+            if (roll < PTERO_SPAWN_CHANCE) {
                 generarPtero(spdDino);
+            } else if (roll < PTERO_SPAWN_CHANCE + FANTASTICO_SPAWN_CHANCE) {
+                generarFantastico(spdDino);
             } else {
                 generarCactus(spdDino);
             }
+
             tiempoUltimoObstaculo = 0;
         }
     }
@@ -95,6 +101,28 @@ public class EnemyManager {
         Obstaculo obstaculo = new Obstaculo(imagenPtero, new Timeline[]{animacionAleteo, movimiento}, TipoObstaculo.PTERODACTILO);
         obstaculosActivos.add(obstaculo);
         mundoLayer.getChildren().add(imagenPtero);
+    }
+
+    private void generarFantastico(double spdDino) {
+        ImageView imagenFantastico = new ImageView(
+            new Image(getClass().getResourceAsStream("/images/imagesObs/MrFantastico.png"))
+        );
+
+        imagenFantastico.setFitHeight(45); // ajusta el tamaño a tu gusto
+        imagenFantastico.setPreserveRatio(true);
+
+        imagenFantastico.setLayoutX(mundoLayer.getPrefWidth());
+        imagenFantastico.setLayoutY(groundLevel - imagenFantastico.getFitHeight());
+
+        Timeline movimiento = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+            imagenFantastico.setLayoutX(imagenFantastico.getLayoutX() - spdDino);
+        }));
+        movimiento.setCycleCount(Animation.INDEFINITE);
+        movimiento.play();
+
+        Obstaculo obstaculo = new Obstaculo(imagenFantastico, new Timeline[]{movimiento}, TipoObstaculo.FANTASTICO);
+        obstaculosActivos.add(obstaculo);
+        mundoLayer.getChildren().add(imagenFantastico);
     }
 
     public void cleanObstacles() {
