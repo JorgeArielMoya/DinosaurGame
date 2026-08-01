@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class DinoManager {
+public class DinoAnimController {
     private final ImageView dinoEstatico;
     private final double dinoBaseY;
 
@@ -25,7 +25,7 @@ public class DinoManager {
     private Image[] runFrames;
     private Image[] duckFrames;
 
-    public DinoManager(ImageView dinoEstatico, double groundLevel) {
+    public DinoAnimController(ImageView dinoEstatico, double groundLevel) {
         this.dinoEstatico = dinoEstatico;
         this.dinoBaseY = groundLevel - 55.0;
         

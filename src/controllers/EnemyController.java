@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class EnemyManager {
+public class EnemyController {
     private final Pane mundoLayer;
     private final double groundLevel;
     private final Random random = new Random();
@@ -25,7 +25,7 @@ public class EnemyManager {
     private final double PTERO_SPAWN_CHANCE = 0.3;
     private final double FANTASTICO_SPAWN_CHANCE = 0.15;
 
-    public EnemyManager(Pane mundoLayer, double groundLevel) {
+    public EnemyController(Pane mundoLayer, double groundLevel) {
         this.mundoLayer = mundoLayer;
         this.groundLevel = groundLevel;
     }

@@ -9,10 +9,10 @@ import javafx.util.Duration;
 import models.Obstaculo;
 import java.util.function.Consumer;
 
-public class GameManager {
+public class GameLoopController {
     private final Pane mundoLayer;
     private final ImageView dinoEstatico;
-    private final EnemyManager enemyManager;
+    private final EnemyController enemyManager;
     private final double INTERVALO_SCORE = 0.1; 
     
     private Timeline animacionMove;
@@ -24,10 +24,10 @@ public class GameManager {
     private Consumer<Integer> onScoreUpdate;
     private Runnable onGameOver;
 
-    public GameManager(Pane mundoLayer, ImageView dinoEstatico, double groundLevel) {
+    public GameLoopController(Pane mundoLayer, ImageView dinoEstatico, double groundLevel) {
         this.mundoLayer = mundoLayer;
         this.dinoEstatico = dinoEstatico;
-        this.enemyManager = new EnemyManager(mundoLayer, groundLevel);
+        this.enemyManager = new EnemyController(mundoLayer, groundLevel);
         inicializarBuclePrincipal();
     }
 
