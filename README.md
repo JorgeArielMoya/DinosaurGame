@@ -1,18 +1,32 @@
-## Getting Started
+# Dino Game 🦖🌵
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+¡Un clásico juego estilo dinosaurio desarrollado en **Java** utilizando **JavaFX**! Supera obstáculos, esquiva al Pterodáctilo y a Mr. Fantástico mientras aumentas tu puntaje en este divertido proyecto.
 
-## Folder Structure
+---
 
-The workspace contains two folders by default, where:
+## 🛠️ Tecnologías Utilizadas
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+* **Java 23**
+* **JavaFX** (Interfaces gráficas, transiciones y animaciones con Timeline)
+* **FXML** (Estructura de vistas)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+---
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## 🎮 Características del Juego
 
-## Dependency Management
+* **Movimiento Dinámico:** Aumento progresivo de la velocidad del juego conforme avanza el puntaje de la partida.
+* **Sistema de Obstáculos Variados:** Generación aleatoria de cactus, Pterodáctilos voladores y obstáculos especiales.
+* **Mecánicas del Dinosaurio:** Capacidad de correr, saltar y agacharse de forma fluida mediante controles de teclado (`Espacio`, `Arriba`, `Abajo`, `S`).
+* **Puntuación y Récords:** Registro en tiempo real del puntaje actual y guardado de la mejor puntuación de la sesión.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+---
+
+## 📁 Estructura del Proyecto
+
+```text
+DinosaurGame/
+├── controllers/    # Controladores de la interfaz (DinoController)
+├── services/       # Lógica del juego (GameManager, DinoManager, EnemyManager)
+├── models/         # Modelos de datos y entidades del juego
+├── views/          # Archivos FXML e interfaces gráficas
+└── resources/      # Sprites de animación (Dino y obstáculos)
